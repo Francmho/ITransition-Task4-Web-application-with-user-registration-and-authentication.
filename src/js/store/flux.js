@@ -19,7 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						password: password
 					};
 
-					const response = await fetch("http://127.0.0.1:5000/admin/users", {
+					const response = await fetch("https://itransition-task4-web-application-with.onrender.com/admin/users", {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json"
