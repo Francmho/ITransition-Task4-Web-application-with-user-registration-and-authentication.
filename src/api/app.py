@@ -1,12 +1,13 @@
 import os # para saber la ruta absoluta de la db si no la encontramos
-from flask_bcrypt import Bcrypt  # para encriptar y comparar
 from flask import Flask, request, jsonify # Para endpoints
-from flask_sqlalchemy import SQLAlchemy  # Para rutas
+from flask_bcrypt import Bcrypt  # para encriptar y comparar
+from flask_sqlalchemy import SQLAlchemy  # Para interactuar con la base de datos
 from flask_jwt_extended import  JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_cors import CORS
+
 from admin_bp import admin_bp                       # Acá importamos rutas admin
 from public_bp import public_bp                     # Acá importamos rutas public
 from database import db                             # Acá importamos la base de datos inicializada
-from flask_cors import CORS
 
 app = Flask(__name__)
 
