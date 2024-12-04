@@ -23,6 +23,8 @@ const injectContext = PassedComponent => {
 		// State for user login
         const [isLoggedIn, setIsLoggedIn] = useState(false);
         const [user, setUser] = useState(null);
+		const { actions } = state;
+
 
 		// Functions for login management
         const logIn = async (email, password) => {
