@@ -72,3 +72,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 Activar myenv:
 $ source myenv/bin/activate
+
+Pasos completos para ejecutar los contenedores:
+
+Build de los contenedores:
+
+$ docker-compose build
+
+Levantar los contenedores:
+
+$ docker-compose up
+
+Si deseas que se ejecuten en segundo plano (detached mode), utiliza:
+
+$ docker-compose up -d
+
+Verifica que todo esté corriendo bien. Puedes verificar los contenedores con:
+
+$ docker ps

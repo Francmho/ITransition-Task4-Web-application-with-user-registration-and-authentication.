@@ -13,11 +13,11 @@ const Layout = () => {
     <div>
         <BrowserRouter basename={basename}>
             <Routes>
-                <Route exact path='/' element={<LoginRegister/>}/>
-                <Route exact path='/login' element={<Login />} />
-                <Route exact path='/home' element={<Home/>}/>
-                <Route exact path='/contact' element={<Contact/>}/>
-                <Route exact path='/*' element={<NotFound/>}/>
+                <Route path='/' element={<LoginRegister/>}/>
+                <Route path='/login' element={<Login />} />
+                <Route path='/home' element={<Home/>}/>
+                <Route path='/contact' element={<Contact/>}/>
+                <Route path='/*' element={<NotFound/>}/>
             </Routes>
         </BrowserRouter>
     </div>
