@@ -90,3 +90,7 @@ $ docker-compose up -d
 Verifica que todo esté corriendo bien. Puedes verificar los contenedores con:
 
 $ docker ps
+
+Accede a PostregresSQL
+
+$ docker exec -it db-1 psql -U database_9xnf_user -d database_9xnf

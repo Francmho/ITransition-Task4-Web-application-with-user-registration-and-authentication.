@@ -15,6 +15,7 @@ CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 # ENCRIPTACION JWT y BCRYPT-------
 
 #app.config["JWT_SECRET_KEY"] = "valor-variable"  # clave secreta para firmar los tokens.( y a futuro va en un archivo .env)
+app.config["JWT_SECRET_KEY"] = os.getenv('JWT_SECRET_KEY', 'fallback_secret')
 jwt = JWTManager(app)  # isntanciamos jwt de JWTManager utilizando app para tener las herramientas de encriptacion.
 bcrypt = Bcrypt(app)   # para encriptar password
 
@@ -24,7 +25,6 @@ bcrypt = Bcrypt(app)   # para encriptar password
 
 app.register_blueprint(admin_bp, url_prefix='/admin')  # poder registrarlo como un blueprint ( parte del app )
                                                        # y si queremos podemos darle toda un path base como en el ejemplo '/admin'
-
 app.register_blueprint(public_bp, url_prefix='/public')  # blueprint public_bp
 
 
@@ -35,6 +35,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
 
 
 print(f"Ruta de la base de datos: {db_path}")
+print(f"Base de datos URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
+
 
 
 if not os.path.exists(os.path.dirname(db_path)): # Nos aseguramos que se cree carpeta instance automatico para poder tener mydatabase.db dentro.
@@ -47,4 +49,4 @@ with app.app_context():
 
 # AL FINAL ( detecta que encendimos el servidor desde terminal y nos da detalles de los errores )
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=os.getenv('DEBUG', False), host=os.getenv('FLASK_RUN_HOST', '0.0.0.0'), port=os.getenv('FLASK_RUN_PORT', 5000))

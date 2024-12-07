@@ -16,9 +16,10 @@ services:
   web:
     build: .
     environment:
+      FLASK_APP : app.py
       DATABASE_URL: postgresql://database_9xnf_user:J8wawyfFzqF0sjWrAzETs8ZV8p1NvNbf@db:5432/database_9xnf
     ports:
-      - "5000:5000"
+      - "5001:5000"
     depends_on:
       - db
     networks:
