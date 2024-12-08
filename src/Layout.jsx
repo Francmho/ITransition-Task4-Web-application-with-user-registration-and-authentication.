@@ -6,6 +6,7 @@ import Register from './views/Register.jsx';
 import Login from './views/Login.jsx';
 import injectContext from './js/store/appContext.js';
 
+
  
 const Layout = () => {
     const basename = process.env.BASENAME || "";
@@ -13,8 +14,8 @@ const Layout = () => {
     <div>
         <BrowserRouter basename={basename}>
             <Routes>
-                <Route exact path='/' element={<Register/>}/>
-                <Route exact path='/login' element={<Login />} />
+                <Route exact path='/register' element={<Register/>}/>
+                <Route exact path='/' element={<Login />} />
                 <Route exact path='/home' element={<Home/>}/>
                 <Route exact path='/contact' element={<Contact/>}/>
                 <Route exact path='/*' element={<NotFound/>}/>

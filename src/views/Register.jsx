@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Context } from '../js/store/appContext.js';
 
-const LoginRegister = () => {
+const Register = () => {
 
     const { store, actions } = useContext(Context)
 
@@ -68,4 +68,4 @@ const LoginRegister = () => {
     );
 };
 
-export default LoginRegister;
+export default Register;
