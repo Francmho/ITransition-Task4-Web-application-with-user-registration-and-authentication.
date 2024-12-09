@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import getState from "./flux.js";
+import Navbar from "../../components/Navbar.jsx";
+import Login from "../../views/Login.jsx";
 
 
-export const Context = React.createContext(null);
+export const Context = React.createContext({});
 
 const injectContext = PassedComponent => {
 	const StoreWrapper = props => {
@@ -36,7 +38,7 @@ const injectContext = PassedComponent => {
 				if (userData && userData.access_token) {
 					setIsLoggedIn(true);  
 					setUser(userData);  // Guardas todo el userData como el usuario
-					localStorage.setItem('user_data', JSON.stringify(userData));  // Guardas todo en localStorage
+					localStorage.setItem('access_token', JSON.stringify(userData.access_token));  // Guardas todo en localStorage
 				}
 			} catch (error) {
 				console.error("(AppContext) Error during login:", error);
@@ -53,14 +55,17 @@ const injectContext = PassedComponent => {
 		useEffect(() => {
 			const token = localStorage.getItem('access_token');
       		if (token) {
-       			 setIsLoggedIn(true);
-				 // Aquí puedes decodificar el token si necesitas obtener el usuario del mismo
+       			setIsLoggedIn(true);
+				const userData = JSON.parse(localStorage.getItem('user_data')); // O la decodificación del token si es necesario
+    			setUser(userData);
 			}
 		}, []);
 
 
 		return (
 			<Context.Provider value={{ ...state, isLoggedIn, user, logIn, logOut }}>
+				{/* <Navbar/> */}
+				{/* <Login/> */}
 				<PassedComponent {...props} />
 			</Context.Provider>
 		);

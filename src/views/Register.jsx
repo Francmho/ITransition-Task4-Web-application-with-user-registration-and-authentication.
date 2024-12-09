@@ -26,8 +26,8 @@ const Register = () => {
 
     return (
     <div>
-        <h2>Register</h2>
-        <h3>Test store: {store.personas}</h3>
+        {/* <h2>Register</h2> */}
+        {/* <h3>Test store: {store.personas}</h3> */}
 
         {store.registerStatus && <h4>Registro Exitoso</h4>}
 
