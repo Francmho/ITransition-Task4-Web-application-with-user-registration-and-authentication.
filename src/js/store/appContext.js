@@ -52,6 +52,22 @@ const injectContext = PassedComponent => {
 			localStorage.removeItem('access_token');
         };
 
+		// En tu archivo de contexto
+		// toggleUserSelection: (id) => {
+		// 	const store = getStore();
+		// 	const updatedUsers = store.users.map(user => 
+		// 	user.id === id ? { ...user, checked: !user.checked } : user
+		// 	);
+		// 	setStore({ ...store, users: updatedUsers });
+		// },
+		
+		// toggleSelectAll: (selectAll) => {
+		// 	const store = getStore();
+		// 	const updatedUsers = store.users.map(user => ({ ...user, checked: !selectAll }));
+		// 	setStore({ ...store, users: updatedUsers });
+		// },
+  
+
 		useEffect(() => {
 			const token = localStorage.getItem('access_token');
       		if (token) {

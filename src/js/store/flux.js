@@ -2,7 +2,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			personas: ["Pedro", "Maria"],
-			registerStatus: false
+			registerStatus: false,
+			selectedUsers:[],
+			users: [
+				{
+				  id: 1,
+				  name: "Clare, Alex",
+				  email: "a_clare42@gmail.com",
+				  lastLogin: [5, 10, 5, 20, 8], // Simulación de datos para la gráfica
+				  checked: true,
+				},
+				{
+				  id: 2,
+				  name: "Morrison, Jim",
+				  email: "dtimer9@dealyaari.com",
+				  lastLogin: [2, 15, 10, 4, 7],
+				  checked: false,
+				},
+				{
+				  id: 3,
+				  name: "Simone, Nina",
+				  email: "marishabelin@giftcode-ao.com",
+				  lastLogin: [3, 8, 14, 5, 11],
+				  checked: true,
+				},
+				// Más usuarios...
+			  ]
 		},
 		actions: {
 
@@ -10,6 +35,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("hola")
 				return
 			},
+			
+			updateUsersStore: (updatedUsers) => {
+				setStore({ users: updatedUsers });
+			  },
+
+			updateSelectAllUsers: (selectAll) => {
+				const updatedUsers = getStore().users.map(user => ({
+					...user,
+					checked: selectAll
+				}));
+				setStore({ users: updatedUsers });
+				},
+				
+			toggleSelectAll: () => {
+				const store = getStore();
+				const selectAll = !store.selectAll;  // Cambia el estado de selectAll
+				actions.updateSelectAllUsers(selectAll); // Actualiza todos los usuarios
+			},
+
 			registers: async(name, email, password) => {
 				try {
 					console.log("entra en register")
@@ -33,6 +77,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (statusCode === 201) {
 						setStore({ ...getStore(), registerStatus: true });
+						//
 					}
 					return responseData
 
