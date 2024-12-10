@@ -3,27 +3,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			personas: ["Pedro", "Maria"],
 			registerStatus: false,
-			selectedUsers:[],
 			users: [
 				{
 				  id: 1,
 				  name: "Clare, Alex",
 				  email: "a_clare42@gmail.com",
-				  lastLogin: [5, 10, 5, 20, 8], // Simulación de datos para la gráfica
+				  last_login: "2024-12-10T14:59:30Z", // Simulación de datos para la gráfica
 				  checked: true,
 				},
 				{
 				  id: 2,
 				  name: "Morrison, Jim",
 				  email: "dtimer9@dealyaari.com",
-				  lastLogin: [2, 15, 10, 4, 7],
+				  lastLogin: "2024-12-09T14:59:30Z",
 				  checked: false,
 				},
 				{
 				  id: 3,
 				  name: "Simone, Nina",
 				  email: "marishabelin@giftcode-ao.com",
-				  lastLogin: [3, 8, 14, 5, 11],
+				  last_login: "2024-11-10T14:59:30Z",
+				  checked: true,
+				},
+				{
+				  id: 4,
+				  name: "Nicole, Mora",
+				  email: "mora@giftcode-ao.com",
+				  last_login: "2024-09-10T14:59:30Z",
 				  checked: true,
 				},
 				// Más usuarios...
@@ -36,23 +42,117 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return
 			},
 			
-			updateUsersStore: (updatedUsers) => {
-				setStore({ users: updatedUsers });
+			selectUsers: (userIds, isSelected) => {
+				const store = getStore();
+				const updatedUsers = store.users.map(user => 
+				  userIds.includes(user.id) 
+					? { ...user, checked: isSelected }  // Cambia el checked según `isSelected`
+					: user
+				);
+				setStore({ ...store, users: updatedUsers });
 			  },
 
-			updateSelectAllUsers: (selectAll) => {
-				const updatedUsers = getStore().users.map(user => ({
-					...user,
-					checked: selectAll
-				}));
-				setStore({ users: updatedUsers });
-				},
-				
-			toggleSelectAll: () => {
+			selectAllUsers: (isSelected) => {
 				const store = getStore();
-				const selectAll = !store.selectAll;  // Cambia el estado de selectAll
-				actions.updateSelectAllUsers(selectAll); // Actualiza todos los usuarios
-			},
+				const updatedUsers = store.users.map(user => 
+					({ ...user, checked: isSelected }) // Cambia el estado de `checked` de todos los usuarios
+				);
+				setStore({ ...store, users: updatedUsers });
+				},
+
+			blockSelectedUsers: () => {
+				const store = getStore();
+				const selectedUsers = store.users.map(user =>
+					user.checked ? { ...user, blocked: true } : user
+				);
+				setStore({ ...store, users: selectedUsers });
+				},
+
+			// blockSelectedUsers: async () => {
+			// 	const store = getStore();
+			// 	const selectedUsers = store.users.filter(user => user.checked);
+			
+			// 	try {
+			// 		const response = await fetch('/api/block-users', {
+			// 			method: 'POST',
+			// 			headers: {
+			// 				'Content-Type': 'application/json',
+			// 			},
+			// 			body: JSON.stringify({ users: selectedUsers.map(user => user.id) }),
+			// 		});
+			// 		if (response.ok) {
+			// 			const updatedUsers = store.users.map(user => 
+			// 				selectedUsers.includes(user) ? { ...user, blocked: true } : user
+			// 			);
+			// 			setStore({ ...store, users: updatedUsers });
+			// 		}
+			// 	} catch (error) {
+			// 		console.error("Error blocking users: ", error);
+			// 	}
+			// },
+
+			unblockSelectedUsers: () => {
+				const store = getStore();
+				const selectedUsers = store.users.map(user =>
+					user.checked ? { ...user, blocked: false } : user
+				);
+				setStore({ ...store, users: selectedUsers });
+				},
+
+			// unblockSelectedUsers: async () => {
+			// 	const store = getStore();
+			// 	const selectedUsers = store.users.filter(user => user.checked);
+			
+			// 	try {
+			// 		const response = await fetch('/api/unblock-users', {
+			// 			method: 'POST',
+			// 			headers: {
+			// 				'Content-Type': 'application/json',
+			// 			},
+			// 			body: JSON.stringify({ users: selectedUsers.map(user => user.id) }),
+			// 		});
+			// 		if (response.ok) {
+			// 			const updatedUsers = store.users.map(user => 
+			// 				selectedUsers.includes(user) ? { ...user, blocked: false } : user
+			// 			);
+			// 			setStore({ ...store, users: updatedUsers });
+			// 		}
+			// 	} catch (error) {
+			// 		console.error("Error unblocking users: ", error);
+			// 	}
+			// },
+			
+			
+			deleteSelectedUsers: () => {
+				const store = getStore();
+				const remainingUsers = store.users.filter(user => !user.checked); // Mantén solo los no seleccionados
+				setStore({ ...store, users: remainingUsers });
+				},
+
+			// deleteSelectedUsers: async () => {
+			// 	const store = getStore();
+			// 	const selectedUsers = store.users.filter(user => user.checked);
+			
+			// 	try {
+			// 		const response = await fetch('/api/delete-users', {
+			// 			method: 'DELETE',
+			// 			headers: {
+			// 				'Content-Type': 'application/json',
+			// 			},
+			// 			body: JSON.stringify({ users: selectedUsers.map(user => user.id) }),
+			// 		});
+			// 		if (response.ok) {
+			// 			const remainingUsers = store.users.filter(user => !selectedUsers.includes(user));
+			// 			setStore({ ...store, users: remainingUsers });
+			// 		}
+			// 	} catch (error) {
+			// 		console.error("Error deleting users: ", error);
+			// 	}
+			// },
+				
+
+  
+			//REGISTER AND LOGIN 
 
 			registers: async(name, email, password) => {
 				try {
