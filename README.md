@@ -94,3 +94,11 @@ $ docker ps
 Accede a PostregresSQL
 
 $ docker exec -it db-1 psql -U database_9xnf_user -d database_9xnf
+
+Iniciar base de datos psql
+$ PGPASSWORD=J8wawyfFzqF0sjWrAzETs8ZV8p1NvNbf psql -h dpg-ct8kb568ii6s73cbsem0-a.oregon-postgres.render.com -U database_9xnf_user database_9xnf
+
+Iniciar contenedor backend-DB
+
+$ docker-compose up
+
