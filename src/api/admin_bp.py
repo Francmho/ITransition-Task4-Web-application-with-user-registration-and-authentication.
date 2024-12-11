@@ -5,11 +5,13 @@ from models import User                                          # importar tabl
 from database import db                                          # importa la db desde database.py
 from datetime import timedelta, datetime                                   # importa tiempo especifico para rendimiento de token válido
 
-
 admin_bp = Blueprint('admin', __name__)     # instanciar admin_bp desde clase Blueprint para crear las rutas.
 
 bcrypt = Bcrypt()
 jwt = JWTManager()
+
+
+
 
 # RUTA TEST de http://127.0.0.1:5000/admin_bp que muestra "Hola mundo":
 @admin_bp.route('/', methods=['GET'])

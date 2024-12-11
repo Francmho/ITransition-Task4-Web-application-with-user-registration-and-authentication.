@@ -1,0 +1,32 @@
+version: '3'
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: database_9xnf_user
+      POSTGRES_PASSWORD: J8wawyfFzqF0sjWrAzETs8ZV8p1NvNbf
+      POSTGRES_DB: database_9xnf
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+
+  web:
+    build: .
+    environment:
+      FLASK_APP : app.py
+      DATABASE_URL: postgresql://database_9xnf_user:J8wawyfFzqF0sjWrAzETs8ZV8p1NvNbf@db:5432/database_9xnf
+    ports:
+      - "5001:5000"
+    depends_on:
+      - db
+    networks:
+      - backend
+
+volumes:
+  db_data:
+
+networks:
+  backend:

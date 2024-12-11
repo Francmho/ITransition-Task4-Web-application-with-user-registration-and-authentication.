@@ -72,3 +72,33 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 Activar myenv:
 $ source myenv/bin/activate
+
+Pasos completos para ejecutar los contenedores:
+
+Build de los contenedores:
+
+$ docker-compose build
+
+Levantar los contenedores:
+
+$ docker-compose up
+
+Si deseas que se ejecuten en segundo plano (detached mode), utiliza:
+
+$ docker-compose up -d
+
+Verifica que todo esté corriendo bien. Puedes verificar los contenedores con:
+
+$ docker ps
+
+Accede a PostregresSQL
+
+$ docker exec -it db-1 psql -U database_9xnf_user -d database_9xnf
+
+Iniciar base de datos psql
+$ PGPASSWORD=J8wawyfFzqF0sjWrAzETs8ZV8p1NvNbf psql -h dpg-ct8kb568ii6s73cbsem0-a.oregon-postgres.render.com -U database_9xnf_user database_9xnf
+
+Iniciar contenedor backend-DB
+
+$ docker-compose up
+
