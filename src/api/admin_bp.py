@@ -3,7 +3,7 @@ from flask_bcrypt import Bcrypt                                  # Bcrypt para e
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity   # Jwt para tokens
 from models import User                                          # importar tabla "User" de models
 from database import db                                          # importa la db desde database.py
-from datetime import timedelta                                   # importa tiempo especifico para rendimiento de token válido
+from datetime import timedelta, datetime                                   # importa tiempo especifico para rendimiento de token válido
 
 
 admin_bp = Blueprint('admin', __name__)     # instanciar admin_bp desde clase Blueprint para crear las rutas.
@@ -74,8 +74,10 @@ def get_token():
         
         # Si es verdadero generamos un token y lo devuelve en una respuesta JSON:
         if true_o_false:
-            expires = timedelta(minutes=30)  # pueden ser "hours", "minutes", "days","seconds"
+            login_user.last_login = datetime.utcnow()  # O también puedes usar .timestamp() si prefieres milisegundos
+            db.session.commit() 
 
+            expires = timedelta(minutes=30)  # pueden ser "hours", "minutes", "days","seconds"
             user_id = login_user.id       # recuperamos el id del usuario para crear el token...
             access_token = create_access_token(identity=user_id, expires_delta=expires)   # creamos el token con tiempo vencimiento
             return jsonify({ 'access_token':access_token}), 200  # Enviamos el token al front ( si es necesario serializamos el "login_user" y tambien lo enviamos en el objeto json )

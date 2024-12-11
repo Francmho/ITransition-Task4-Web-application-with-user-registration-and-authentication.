@@ -4,6 +4,7 @@ import Contact from './views/Contact.jsx';
 import NotFound from './views/NotFound.jsx';
 import Register from './views/Register.jsx';
 import Login from './views/Login.jsx';
+import AdminPage from './views/AdminPage.jsx';
 import injectContext from './js/store/appContext.js';
 import Navbar from './components/Navbar';
 
@@ -16,6 +17,7 @@ const Layout = () => {
             <Navbar />
             <Routes>
                 <Route exact path='/Register' element={<Register/>}/>
+                <Route exact path='/adminpage' element={<AdminPage />} />
                 <Route exact path='/' element={<Login />} />
                 <Route exact path='/home' element={<Home/>}/>
                 <Route exact path='/contact' element={<Contact/>}/>
