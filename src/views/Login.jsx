@@ -22,7 +22,7 @@ const Login = () => {
         const userData = await actions.login(email, password);
         if (userData) {
           // Si el login es exitoso, redirigir a /contact
-          navigate('/contact');
+          navigate('/adminpage');
         }
       } catch (error) {
         console.error("Error de login:", error);

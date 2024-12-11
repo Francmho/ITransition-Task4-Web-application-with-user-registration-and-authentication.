@@ -1,8 +1,11 @@
+import { timeAgo } from '../../components/timeAgo.jsx'; 
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			personas: ["Pedro", "Maria"],
 			registerStatus: false,
+			filteredUsers: [],
 			users: [
 				{
 				  id: 1,
@@ -41,6 +44,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log("hola")
 				return
 			},
+
+			searchUser: (query) => {
+				const store = getStore();
+			  
+				const filteredUsers = store.users.filter(user => {
+				  const nameMatches = user.name.toLowerCase().includes(query.toLowerCase());
+				  const emailMatches = user.email.toLowerCase().includes(query.toLowerCase());
+				  
+				  // Calculamos el timeAgo de last_login
+				  const lastLoginText = user.last_login ? timeAgo(user.last_login).toLowerCase() : '';
+			  
+				  // Filtramos por el texto generado por timeAgo
+				  const lastLoginMatches = lastLoginText.includes(query.toLowerCase());
+			  
+				  return nameMatches || emailMatches || lastLoginMatches;
+				});
+			  
+				setStore({ ...store, filteredUsers });
+			  },
 			
 			selectUsers: (userIds, isSelected) => {
 				const store = getStore();

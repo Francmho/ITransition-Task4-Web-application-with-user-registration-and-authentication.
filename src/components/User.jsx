@@ -1,28 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../js/store/appContext";
-//import { Sparklines, SparklinesLine } from 'react-sparklines'; // Gráfica minimalista
+import { timeAgo } from "./timeAgo";
 
 const User = () => {
   const { store, actions } = useContext(Context); // Asumiendo que tienes los usuarios en el store
   const [selectAll, setSelectAll] = useState(false); // Estado para manejar el checkbox de "seleccionar todos"
 
 
-    // Función para convertir el isoDate de last_login a un formato legible
-    const timeAgo = (isoDate) => {
-      const seconds = Math.floor((new Date() - new Date(isoDate)) / 1000);
-      const units = [
-        { label: "month", divisor: 60 * 60 * 24 * 30 },
-        { label: "day", divisor: 60 * 60 * 24 },
-        { label: "hour", divisor: 60 * 60 },
-        { label: "minute", divisor: 60 }
-      ];
-    
-      for (let unit of units) {
-        const value = Math.floor(seconds / unit.divisor);
-        if (value >= 1) return `${value} ${unit.label}${value > 1 ? "s" : ""} ago`;
-      }
-      return "less than a minute ago";
-    };
+
 
     // Función unificada para calcular el progreso y obtener el color de la barra
 const calculateProgressAndColor = (isoDate, maxTimeInMonths = 3) => {
@@ -79,7 +64,7 @@ const calculateProgressAndColor = (isoDate, maxTimeInMonths = 3) => {
           </tr>
         </thead>
         <tbody>
-          {store.users.map((user) => (
+          {(store.filteredUsers.length > 0 ? store.filteredUsers : store.users).map((user) => (
             <tr key={user.id}>
               <td>
                 <input 
@@ -88,11 +73,17 @@ const calculateProgressAndColor = (isoDate, maxTimeInMonths = 3) => {
                 onChange={() => handleSelectUser(user.id)} // Selecciona o deselecciona un solo usuario
                 />
               </td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
+              <td className={user.blocked ? "text-decoration-line-through text-muted" : ""}>
+                {user.name}
+              </td>
+              <td className={user.blocked ? "text-muted" : ""}>
+                {user.email}
+              </td>
               <td>
                 <div>
-                  <small>{timeAgo(user.last_login)}</small>
+                  <small className={user.blocked ? "text-muted" : ""}>
+                    {timeAgo(user.last_login)}
+                  </small>
                 </div>
                 <div className="progress" style={{ height: "5px" }}>
                   <div
