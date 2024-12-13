@@ -45,6 +45,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return
 			},
 
+			fetchUsers: async () => {
+				const token = JSON.parse(localStorage.getItem('access_token')); // Recuperar el token desde localStorage
+				try {
+					const response = await fetch("https://itransition-task4-web-application-with.onrender.com/admin/users", {
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${token}`, // Incluir el token en el encabezado de autorización
+							'Content-Type': 'application/json'
+						}
+					});
+					console.log(response);
+			
+					if (!response.ok) {
+						throw new Error('Error fetching users: ' + response.statusText);
+					}
+			
+					const users = await response.json();
+					setStore({ ...getStore(), users });
+					console.log(users);
+					
+				} catch (error) {
+					console.error("Error fetching users: ", error);
+				}
+			},
+			
+
 			searchUser: (query) => {
 				const store = getStore();
 			  

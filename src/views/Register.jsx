@@ -36,7 +36,7 @@ const Register = () => {
             <label htmlFor="name">Nombre:</label>
             <input
             type="text"
-            id="name"
+            id="nameId"
             name="name"
             value={formData.name}
             onChange={handleChange}
@@ -46,7 +46,7 @@ const Register = () => {
             <label htmlFor="email">Email:</label>
             <input
             type="email"
-            id="email"
+            id="emailId"
             name="email"
             value={formData.email}
             onChange={handleChange}
@@ -56,7 +56,7 @@ const Register = () => {
             <label htmlFor="password">Contraseña:</label>
             <input
             type="password"
-            id="password"
+            id="passwordId"
             name="password"
             value={formData.password}
             onChange={handleChange}

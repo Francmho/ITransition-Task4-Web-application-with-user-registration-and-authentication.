@@ -102,9 +102,16 @@ def show_users():
         for user in users:
             user_dict = {
                 'id': user.id,
-                'email': user.email
+                'username': user.name,
+                'email': user.email,
+                'is_blocked': user.is_blocked
             }
             user_list.append(user_dict)
         return jsonify(user_list), 200
     else:
         return {"Error": "Token inválido o no proporcionado"}, 401
+
+
+new_user = User(name='John Doe', email='john@example.com', password='password', last_login=datetime.utcnow())
+db.session.add(new_user)
+db.session.commit()

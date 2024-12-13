@@ -52,21 +52,6 @@ const injectContext = PassedComponent => {
 			localStorage.removeItem('access_token');
         };
 
-		// En tu archivo de contexto
-		// toggleUserSelection: (id) => {
-		// 	const store = getStore();
-		// 	const updatedUsers = store.users.map(user => 
-		// 	user.id === id ? { ...user, checked: !user.checked } : user
-		// 	);
-		// 	setStore({ ...store, users: updatedUsers });
-		// },
-		
-		// toggleSelectAll: (selectAll) => {
-		// 	const store = getStore();
-		// 	const updatedUsers = store.users.map(user => ({ ...user, checked: !selectAll }));
-		// 	setStore({ ...store, users: updatedUsers });
-		// },
-  
 
 		useEffect(() => {
 			const token = localStorage.getItem('access_token');
@@ -74,6 +59,8 @@ const injectContext = PassedComponent => {
        			setIsLoggedIn(true);
 				const userData = JSON.parse(localStorage.getItem('user_data')); // O la decodificación del token si es necesario
     			setUser(userData);
+				console.log(token);
+				actions.fetchUsers();
 			}
 		}, []);
 
