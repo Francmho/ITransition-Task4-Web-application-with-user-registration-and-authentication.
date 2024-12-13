@@ -64,30 +64,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ ...store, filteredUsers });
 			  },
 			
+
 			selectUsers: (userIds, isSelected) => {
 				const store = getStore();
 				const updatedUsers = store.users.map(user => 
-				  userIds.includes(user.id) 
-					? { ...user, checked: isSelected }  // Cambia el checked según `isSelected`
+					(userIds.length === 0 || userIds.includes(user.id)) 
+					? { ...user, checked: isSelected }  // Cambia el estado de `checked` según `isSelected`
 					: user
-				);
-				setStore({ ...store, users: updatedUsers });
-			  },
-
-			selectAllUsers: (isSelected) => {
-				const store = getStore();
-				const updatedUsers = store.users.map(user => 
-					({ ...user, checked: isSelected }) // Cambia el estado de `checked` de todos los usuarios
 				);
 				setStore({ ...store, users: updatedUsers });
 				},
 
-			blockSelectedUsers: () => {
+
+			blockUnblockUsers: () => {
 				const store = getStore();
-				const selectedUsers = store.users.map(user =>
-					user.checked ? { ...user, blocked: true, checked: false  } : user
-				);
-				setStore({ ...store, users: selectedUsers });
+				const updatedUsers = store.users.map(user => {
+					// Si el usuario está seleccionado, lo bloqueamos o desbloqueamos
+					if (user.checked) {
+					return {
+						...user,
+						blocked: !user.blocked, // Alterna el estado de 'blocked'
+						checked: false // Desmarca el usuario después de bloquear/desbloquear
+					};
+					}
+					return user;
+				});
+				
+				setStore({ ...store, users: updatedUsers });
 				},
 
 			// blockSelectedUsers: async () => {
@@ -113,13 +116,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 	}
 			// },
 
-			unblockSelectedUsers: () => {
-				const store = getStore();
-				const selectedUsers = store.users.map(user =>
-					user.checked ? { ...user, blocked: false, checked: false  } : user
-				);
-				setStore({ ...store, users: selectedUsers });
-				},
 
 			// unblockSelectedUsers: async () => {
 			// 	const store = getStore();

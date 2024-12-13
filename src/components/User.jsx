@@ -36,7 +36,7 @@ const calculateProgressAndColor = (isoDate, maxTimeInMonths = 3) => {
   // Maneja la selección o deselección de todos los usuarios
   const toggleSelectAll = () => {
     setSelectAll(!selectAll);
-    actions.selectAllUsers(!selectAll); // Accion para seleccionar o deseleccionar todos los usuarios
+    actions.selectUsers([],!selectAll); // Accion para seleccionar o deseleccionar todos los usuarios
   };
 
    // Maneja la selección individual de un usuario

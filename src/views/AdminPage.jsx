@@ -17,11 +17,11 @@ const handleSearch = (e) => {
       <nav className="navbar navbar-expand-lg bg-light mb-3">
         <div className="container-fluid">
           <div className="navbar-nav d-flex flex-row flex-wrap-nowrap">
-          <button className="btn btn-sm btn-outline-secondary m-1" onClick={actions.blockSelectedUsers}>
+          <button className="btn btn-sm btn-outline-secondary m-1" onClick={actions.blockUnblockUsers}>
             Block <i className="fas fa-lock"></i>
           </button>
 
-          <button className="btn btn-sm btn-outline-primary m-1" onClick={actions.unblockSelectedUsers}>
+          <button className="btn btn-sm btn-outline-primary m-1" onClick={actions.blockUnblockUsers}>
           <i className="fas fa-lock-open"></i>
           </button>
 
