@@ -112,6 +112,6 @@ def show_users():
         return {"Error": "Token inválido o no proporcionado"}, 401
 
 
-new_user = User(name='John Doe', email='john@example.com', password='password', last_login=datetime.utcnow())
-db.session.add(new_user)
-db.session.commit()
+# new_user = User(name='John Doe', email='john@example.com', password='password', last_login=datetime.utcnow())
+# db.session.add(new_user)
+# db.session.commit()
