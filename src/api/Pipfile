@@ -10,7 +10,7 @@ flask-bcrypt = "*"
 werkzeug = "==2.2.3"
 flask_sqlalchemy = "*"
 flask_jwt_extended = "*"
-Flask-Migrate==4.0.7
+Flask-Migrate = "==4.0.7"
 importlib_metadata = "==6.7.0"
 zipp = "==3.15.0"
 
