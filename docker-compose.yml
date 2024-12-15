@@ -1,4 +1,4 @@
-version: '3'
+#version: '3'
 services:
   db:
     image: postgres:13
@@ -16,7 +16,7 @@ services:
   web:
     build: .
     environment:
-      FLASK_APP : app.py
+      FLASK_APP: src/api/app.py
       DATABASE_URL: postgresql://database_9xnf_user:J8wawyfFzqF0sjWrAzETs8ZV8p1NvNbf@db:5432/database_9xnf
     ports:
       - "5001:5000"
@@ -24,9 +24,13 @@ services:
       - db
     networks:
       - backend
+    volumes:
+    - .:/app 
+    command: pipenv run flask run --host=0.0.0.0 --port=5000
 
 volumes:
   db_data:
 
 networks:
   backend:
+    driver: bridge
