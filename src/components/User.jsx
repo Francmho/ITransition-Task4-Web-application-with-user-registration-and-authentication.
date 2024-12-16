@@ -2,9 +2,10 @@ import React, { useContext, useState } from "react";
 import { Context } from "../js/store/appContext";
 import { timeAgo } from "./timeAgo";
 
-const User = () => {
+const User = ({ selectAll, onSelectAllChange }) => {
+  console.log('onSelectAllChange type:', typeof onSelectAllChange); 
   const { store, actions } = useContext(Context); // Asumiendo que tienes los usuarios en el store
-  const [selectAll, setSelectAll] = useState(false); // Estado para manejar el checkbox de "seleccionar todos"
+  //const [selectAll, setSelectAll] = useState(false); // Estado para manejar el checkbox de "seleccionar todos"
 
 
 
@@ -34,11 +35,11 @@ const calculateProgressAndColor = (isoDate, maxTimeInMonths = 3) => {
 
 
   // Maneja la selección o deselección de todos los usuarios
-  const toggleSelectAll = () => {
-    setSelectAll(!selectAll);
-    actions.selectUsers([],!selectAll); // Accion para seleccionar o deseleccionar todos los usuarios
+  // const toggleSelectAll = () => {
+  //   setSelectAll(!selectAll);
+  //   actions.selectUsers([],!selectAll); // Accion para seleccionar o deseleccionar todos los usuarios
     
-  };
+  // };
 
    // Maneja la selección individual de un usuario
    const handleSelectUser = (userId) => {
@@ -57,7 +58,7 @@ const calculateProgressAndColor = (isoDate, maxTimeInMonths = 3) => {
               <input 
               type="checkbox" 
               checked={selectAll}
-              onChange={toggleSelectAll} //AdminPage.jsx
+              onChange={onSelectAllChange} //AdminPage.jsx
               /> 
             </th>
             <th scope="col">Name</th>

@@ -6,6 +6,12 @@ const AdminPage = () => {
   const { actions } = useContext(Context); // Obtenemos el store y las acciones desde Flux
   const [selectAll, setSelectAll] = useState(false); 
 
+  const toggleSelectAll = () => {
+    setSelectAll(!selectAll);
+    actions.selectUsers([], !selectAll); // Actualiza el estado de selección de todos los usuarios en el store
+  };
+
+
   // Manejar Bloquear o Desbloquear
   const handleBlockUnblock = (isBlock) => {
     actions.blockUnblockUsers(isBlock); // Bloquea (True) o Desbloquea (False) según el parámetro
@@ -55,7 +61,7 @@ const handleSearch = (e) => {
         </div>
       </nav>
      
-      <User selectAll={selectAll} />
+      <User selectAll={selectAll} onSelectAllChange={toggleSelectAll}/>
 
     </div>
   );
