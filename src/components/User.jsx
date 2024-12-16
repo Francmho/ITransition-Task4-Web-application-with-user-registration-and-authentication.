@@ -37,12 +37,14 @@ const calculateProgressAndColor = (isoDate, maxTimeInMonths = 3) => {
   const toggleSelectAll = () => {
     setSelectAll(!selectAll);
     actions.selectUsers([],!selectAll); // Accion para seleccionar o deseleccionar todos los usuarios
+    
   };
 
    // Maneja la selección individual de un usuario
    const handleSelectUser = (userId) => {
     const isSelected = store.users.find(user => user.id === userId).checked;
     actions.selectUsers([userId], !isSelected); // Cambia el estado de un solo usuario
+    
   };
   
 

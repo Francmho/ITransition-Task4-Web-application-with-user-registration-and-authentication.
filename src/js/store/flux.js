@@ -102,14 +102,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				},
 
 
-			blockUnblockUsers: () => {
+			blockUnblockUsers: (isBlock) => {
 				const store = getStore();
 				const updatedUsers = store.users.map(user => {
 					// Si el usuario está seleccionado, lo bloqueamos o desbloqueamos
 					if (user.checked) {
 					return {
 						...user,
-						blocked: !user.blocked, // Alterna el estado de 'blocked'
+						blocked: isBlock, // Alterna el estado de 'blocked'
 						checked: false // Desmarca el usuario después de bloquear/desbloquear
 					};
 					}
