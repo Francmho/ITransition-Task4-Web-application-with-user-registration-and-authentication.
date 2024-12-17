@@ -3,7 +3,6 @@ import { Context } from "../js/store/appContext";
 import { timeAgo } from "./timeAgo";
 
 const User = ({ selectAll, onSelectAllChange }) => {
-  console.log('onSelectAllChange type:', typeof onSelectAllChange); 
   const { store, actions } = useContext(Context); // Asumiendo que tienes los usuarios en el store
   //const [selectAll, setSelectAll] = useState(false); // Estado para manejar el checkbox de "seleccionar todos"
 

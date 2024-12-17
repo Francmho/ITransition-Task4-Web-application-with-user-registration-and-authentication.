@@ -27,6 +27,16 @@ const injectContext = PassedComponent => {
         const [user, setUser] = useState(null);
 		const { actions } = state;
 
+		useEffect(() => {
+			const token = localStorage.getItem('access_token');
+			  if (token) {
+				   setIsLoggedIn(true);
+				const userData = JSON.parse(localStorage.getItem('user_data')); // O la decodificación del token si es necesario
+				setUser(userData);
+				console.log(token);
+				actions.fetchUsers();
+			}
+		}, []);
 
 		// Functions for login management
         const logIn = async (email, password) => {
@@ -51,18 +61,6 @@ const injectContext = PassedComponent => {
             setUser(null);
 			localStorage.removeItem('access_token');
         };
-
-
-		useEffect(() => {
-			const token = localStorage.getItem('access_token');
-      		if (token) {
-       			setIsLoggedIn(true);
-				const userData = JSON.parse(localStorage.getItem('user_data')); // O la decodificación del token si es necesario
-    			setUser(userData);
-				console.log(token);
-				actions.fetchUsers();
-			}
-		}, []);
 
 
 		return (

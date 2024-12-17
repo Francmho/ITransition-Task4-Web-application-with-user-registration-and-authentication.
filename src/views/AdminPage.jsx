@@ -32,7 +32,7 @@ const handleSearch = (e) => {
 };
 
   return (
-    <div className="container">
+    <div className="container mt-3">
       <nav className="navbar navbar-expand-lg bg-light mb-3">
         <div className="container-fluid">
           <div className="navbar-nav d-flex flex-row flex-wrap-nowrap">
