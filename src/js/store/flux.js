@@ -109,7 +109,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (user.checked) {
 					return {
 						...user,
-						blocked: isBlock, // Alterna el estado de 'blocked'
+						is_blocked: isBlock, // Alterna el estado de 'blocked'
 						checked: false // Desmarca el usuario después de bloquear/desbloquear
 					};
 					}
@@ -119,28 +119,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ ...store, users: updatedUsers });
 				},
 
-			// blockSelectedUsers: async () => {
-			// 	const store = getStore();
-			// 	const selectedUsers = store.users.filter(user => user.checked);
+			blockSelectedUsers: async () => {
+				const store = getStore();
+				const selectedUsers = store.users.filter(user => user.checked);
 			
-			// 	try {
-			// 		const response = await fetch('/api/block-users', {
-			// 			method: 'POST',
-			// 			headers: {
-			// 				'Content-Type': 'application/json',
-			// 			},
-			// 			body: JSON.stringify({ users: selectedUsers.map(user => user.id) }),
-			// 		});
-			// 		if (response.ok) {
-			// 			const updatedUsers = store.users.map(user => 
-			// 				selectedUsers.includes(user) ? { ...user, blocked: true, checked: false  } : user
-			// 			);
-			// 			setStore({ ...store, users: updatedUsers });
-			// 		}
-			// 	} catch (error) {
-			// 		console.error("Error blocking users: ", error);
-			// 	}
-			// },
+				try {
+					const response = await fetch('https://itransition-task4-web-application-with.onrender.com/admin/users/block-unblock', {
+						method: 'POST',
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem('token')}`,
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({ users: selectedUsers.map(user => user.id) }),
+					});
+					if (response.ok) {
+						const updatedUsers = store.users.map(user => 
+							selectedUsers.some(u => u.id === user.id) ? { ...user, is_blocked: true, checked: false } : user	
+							// selectedUsers.includes(user) ? { ...user, blocked: true, checked: false  } : user
+						);
+						setStore({ ...store, users: updatedUsers });
+					} else {
+					const errorData = await response.json();
+					console.error("Error blocking users: ", errorData.message);
+   			     }
+				} catch (error) {
+					console.error("Error blocking users: ", error);
+				}
+			},
 
 
 			// unblockSelectedUsers: async () => {
@@ -178,7 +183,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 	const selectedUsers = store.users.filter(user => user.checked);
 			
 			// 	try {
-			// 		const response = await fetch('/api/delete-users', {
+			// 		const response = await fetch('https://itransition-task4-web-application-with.onrender.com/admin/delete-users', {
 			// 			method: 'DELETE',
 			// 			headers: {
 			// 				'Content-Type': 'application/json',
@@ -220,7 +225,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(responseData)
 
 					if (statusCode === 201) {
-						setStore({ ...getStore(), registerStatus: true });
+						setStore({ ...getStore(), registerStatus: true, users: responseData });
 						//
 					}
 					return responseData
