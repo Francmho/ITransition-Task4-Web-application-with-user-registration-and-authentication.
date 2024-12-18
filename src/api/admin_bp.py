@@ -83,6 +83,41 @@ class BlockUnblockUser(MethodView):
             db.session.rollback()
             return jsonify({"error": f"Failed to update users: {str(e)}"}), 500
 
+class DeleteUsers(MethodView):
+    @jwt_required()
+    def delete(self):
+        # Verifica que el token es válido y que el usuario está autenticado
+        current_user_id = get_jwt_identity()
+        if not current_user_id:
+            return jsonify({"error": "Invalid or missing token."}), 401
+
+        data = request.get_json()
+        if not data or 'users' not in data:
+            return jsonify({"error": "Missing users data."}), 400
+
+        user_ids = data['users']
+
+        # Verifica que la lista de IDs no esté vacía
+        if not user_ids or len(user_ids) == 0:
+            return jsonify({"error": "No users selected for deletion."}), 400
+
+        # Intenta eliminar los usuarios seleccionados
+        try:
+            users_to_delete = User.query.filter(User.id.in_(user_ids)).all()
+
+            if not users_to_delete:
+                return jsonify({"error": "No matching users found."}), 404
+
+            for user in users_to_delete:
+                db.session.delete(user)
+
+            db.session.commit()
+
+            return jsonify({"message": f"Deleted {len(users_to_delete)} users successfully."}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"error": f"Failed to delete users: {str(e)}"}), 500
+
 
 # Register the views
 
@@ -90,5 +125,5 @@ admin_bp.add_url_rule('/register', view_func=Register.as_view('register'))
 admin_bp.add_url_rule('/login', view_func=Login.as_view('login'))
 admin_bp.add_url_rule('/users', view_func=AdminUsers.as_view('admin_users'))
 admin_bp.add_url_rule('/users/block-unblock', view_func=BlockUnblockUser.as_view('block_unblock_user'))
-
+admin_bp.add_url_rule('/delete-users', view_func=DeleteUsers.as_view('delete_users'))
 

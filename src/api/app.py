@@ -43,4 +43,4 @@ if not os.path.exists(os.path.dirname(db_path)): # Nos aseguramos que se cree ca
 
 # AL FINAL ( detecta que encendimos el servidor desde terminal y nos da detalles de los errores )
 if __name__ == '__main__':
-    app.run(debug=os.getenv('DEBUG', False), host=os.getenv('FLASK_RUN_HOST', '0.0.0.0'), port=os.getenv('FLASK_RUN_PORT', 5000))
+    app.run(debug=os.getenv('DEBUG', True), host=os.getenv('FLASK_RUN_HOST', '0.0.0.0'), port=os.getenv('FLASK_RUN_PORT', 5000))
