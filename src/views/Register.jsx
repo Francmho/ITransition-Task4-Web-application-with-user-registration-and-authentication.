@@ -29,7 +29,7 @@ const Register = () => {
 
     return (
       <div className="container">
-          {store.registerStatus && <h4 className="text-success alert alert-success">Registro Exitoso</h4>}
+          {store.registerStatus && <h4 className="text-success alert alert-success">Sucessfully registered</h4>}
 
           <form onSubmit={handleSubmit(handleRegister)}>
           {/* Name Field */}
@@ -71,7 +71,7 @@ const Register = () => {
             {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
           </div>
 
-          <button type="submit" className="btn btn-primary">Registrar</button>
+          <button type="submit" className="btn btn-primary">Register</button>
         </form>
           {/* <button onClick={handleRegister}>Register</button> */}
       </div>

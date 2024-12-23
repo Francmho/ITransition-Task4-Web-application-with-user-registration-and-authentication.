@@ -1,23 +1,29 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Context } from '../js/store/appContext.js';
 import { useNavigate } from 'react-router-dom'; 
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+
+// Define schema for validation using Yup
+const schema = yup.object({
+  email: yup.string().email('Correo electrónico inválido').required('El correo electrónico es obligatorio'),
+  password: yup.string().min(6, 'La contraseña debe tener al menos 6 caracteres').required('La contraseña es obligatoria'),
+}).required();
 
 const Login = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate(); 
 
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+  // Use useForm with Yup validation
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema),
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
-  const handleLogin = async () => {
-    const { email, password } = formData;
+  const handleLogin = async (data) => {
+    const { email, password } = data;
     try {
         const userData = await actions.login(email, password);
         if (userData) {
@@ -30,32 +36,39 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form>
-        <div>
-          <label htmlFor="email">Email:</label>
+    <div className="alert alert-light m-5 p-5">
+      <h1 className="mb-4 d-flex align-center lg-col-8">Login</h1>
+      {/* Form with Bootstrap classes and react-hook-form integration */}
+      <form onSubmit={handleSubmit(handleLogin)}>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">Email</label>
           <input
             type="email"
             id="email"
             name="email"
-            value={formData.email}
-            onChange={handleChange}
+            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+            {...register('email')}  // Registering input with react-hook-form
           />
+          {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Password</label>
           <input
             type="password"
             id="password"
             name="password"
-            value={formData.password}
-            onChange={handleChange}
+            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+            {...register('password')}  // Registering input with react-hook-form
           />
+          {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
         </div>
+
+        <button type="submit" className="btn btn-primary">Login</button>
       </form>
-      <button onClick={handleLogin}>Login</button>
-      {store.loginError && <h4>{store.loginError}</h4>}
+
+      {/* Display error if login fails */}
+      {store.loginError && <div className="alert alert-danger mt-3">{store.loginError}</div>}
     </div>
   );
 };
