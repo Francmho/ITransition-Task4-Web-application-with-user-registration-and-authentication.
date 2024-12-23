@@ -11,6 +11,7 @@ const Navbar = () => {
   const handleShow = () => setShowRegister(true);
   const handleClose = () => setShowRegister(false);
 
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -32,7 +33,12 @@ const Navbar = () => {
         </div>
       </nav>
 
-      <div className={`offcanvas offcanvas-start ${showRegister ? 'show' : ''}`} tabindex="-1" id="offcanvasRegister" aria-labelledby="offcanvasRegisterLabel">
+
+      <div className={`offcanvas offcanvas-start ${showRegister ? 'show' : ''}`} 
+        tabindex="-1" 
+        id="offcanvasRegister" 
+        aria-labelledby="offcanvasRegisterLabel"
+      >
         <div className="offcanvas-header">
           <h5 id="offcanvasRegisterLabel">Register</h5>
           <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" onClick={handleClose}></button>
@@ -41,7 +47,9 @@ const Navbar = () => {
           <Register/>
         </div>
       </div>
+
     </>
+
   );
 
 };
